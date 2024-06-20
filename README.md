@@ -22,15 +22,15 @@ Versão utilizada do Autocad: S.51.0.0 Autodesk AutoCAD LT 2022 (Product Version
 Não tem opções que envolvam o eixo Z (para autocad 3D, não irá funcionar - a menos que tenha uma alteração dos script com adição das coordenadas Z=0)
 
 # Estrutura de arquivos e pastas necessária
---/.
---/main.py
---/functions.py
---/classes.py
---/models.py
---/Modelo de Entrada Log Sondagem.xlsx      (modelo da planilha de entrada)
---/in/
---/in/planilhaEntrada.xlsx     (planilha de entrada preenchida precisa ser posta aqui antes de inicializar o programa)
---/out/
+- /.
+- /main.py
+- /functions.py
+-  /classes.py
+- /models.py
+- /Modelo de Entrada Log Sondagem.xlsx      (modelo da planilha de entrada)
+- /in/
+- /in/planilhaEntrada.xlsx     (planilha de entrada preenchida precisa ser posta aqui antes de inicializar o programa)
+- /out/
 
 Data/Hora de início do desenvolvimento: 07/06/2024 10h00
 - Versão 0.0.1 - 07/06/2024 - Implementação das classes básicas de funcionamento do programa.
