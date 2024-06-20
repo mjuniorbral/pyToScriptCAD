@@ -151,6 +151,13 @@ class LogSondagem(LogSondagemPai):
         elementos = []
         profund = dadosSond.at["Prof. total (m)","Unnamed: 1"]
         nomeSondagem = dadosSond.at["Nome da Sondagem","Unnamed: 1"]
+        
+        # Verificando a equivalência entre o nome da planilha e da sondagem no campo da célula referente
+        if self.nomeSondagem!=nomeSondagem:
+            self.nomeSondagem = nomeSondagem
+            self.script.nome_arquivo= nomeSondagem
+            print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O nome da planilha é diferente do nome na célula referente a sondagem. Nome do modelo foi substituido para {nomeSondagem}")
+
         cotaSondagem = dadosSond.at["Cota de Boca (m)","Unnamed: 1"]
         cotaNA = dadosSond.at["Profundidade do NA. (m)","Unnamed: 1"]
         elementos.append(Rectangule((0,0),(dx,-profund),self.LOGS))

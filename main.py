@@ -32,6 +32,18 @@
 # Versão 0.0.1 - 07/06/2024 - Implementação das classes básicas de funcionamento do programa.
 # Versão 0.0.2 - 20/06/2024 - Definição da arquitetura de software e finalização de algumas implementações.
 
+# COMO USAR O PROGRAMA?
+# Garantir que as versões do python, autocad e módulo pandas estão compatíveis com esse projeto (não precisa ser a mesma versão, mas precisa ser compatível - na dúvida, rode o programa, e se não der erro, a princípio é compatível);
+# Preencher a planilha modelo com as informações da sondagem;
+# Nomear a aba/planilha do arquivo excel igual ao nome da sondagem apresentada na própria planilha;
+# Criar quantas abas quiser para quantas sondagens for preciso;
+# Se não tiver criado, criar uma pasta de nome "in" (tudo minúsculo) e uma de nome "out" (tudo minúsculo) na mesma pasta onde está o arquivo "main.py" (conforme estrutura de arquivos e pastas citado anteriormente);
+# Mover a planilha de entrada preenchida para a pasta "in";
+# Em seguida, executar o programa "main.py" no terminal usando o python3;
+# Os scripts irão ser gerados, por padrão, na pasta "out";
+# Existem outras formas de usar esse programa, mas ele está configurado para ser fixo com as sondagens.
+# qualquer dúvida, meu contato está disponível para envio de mensagens.
+
 from classes import *
 from models import *
 from functions import *
