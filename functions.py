@@ -1,11 +1,41 @@
 import unicodedata
 import inspect
 import pandas as pd
+import numpy as np
 import os
+
+def toGrandeza (valor,unidade,casasDecimais=2,separadorDecimal=",",separadorMilhar="")->str:
+    if valor=="-" or str(valor)=="nan":
+        return valor
+    inteiro = int(valor)
+    decimal = round(valor-inteiro,casasDecimais)
+    if len(unidade)>0:
+        unidade = " "+unidade
+    cont = 0
+    strInteiro = ""
+    for c in str(inteiro)[::-1]:
+        cont+=1
+        strInteiro+=c
+        if cont%3==0:
+            strInteiro+=separadorMilhar
+    strInteiro = strInteiro[::-1]
+    if strInteiro[0]==separadorMilhar:
+        strInteiro = strInteiro[1:]
+    strDecimal = f"{decimal:.{casasDecimais}f}"[2:]
+    if casasDecimais==0:
+        separadorDecimal = ""
+    return f"{strInteiro}{separadorDecimal}{strDecimal}{unidade}"
+
+def celToStr(celula):
+    if celula==np.nan:
+        return "-"
+    return str(celula)
 
 def encontrar_acentos_e_cedilha(texto):
     acentos_e_cedilha = []
-
+    if not isinstance(texto,str):
+        print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O texto '{texto}' não é um str. Ele será convertido.")
+        texto = str(texto)
     for caractere in texto:
         # Normaliza o caractere em forma NFD (Nomalization Form Decomposition)
         # para separar o caractere base dos diacríticos
@@ -49,7 +79,10 @@ def dotToComma(num:float)->str:
     return str(num).replace(".",",")
 
 def acharHeightIdeal (texto,dx,dy,taxaEspacoAltura=1.6666,preenchimento=0.7,maxHeight=0.25,minHeight=0.1):
+    if not isinstance(texto,str):
+        texto = str(texto)
     textHeight = ((preenchimento/taxaEspacoAltura)*(dx*dy/len(texto)))**0.5
+    
     if textHeight > maxHeight:
         textHeight = maxHeight
         print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O textHeight é maior do que o máximo de {maxHeight}, por isso ele foi substituido.")

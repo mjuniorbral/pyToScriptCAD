@@ -81,7 +81,7 @@ class Object ():
         self.comments = []
         pass
     def set(self) -> None:
-        print(f"Função {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)} não definida na classe {self.__class__.__name__}.")
+        print(f"Função {self.__class__.__name__}.{inspect.currentframe().f_code.co_name} não definida na classe {self.__class__.__name__}.")
         pass
     def load_settings(self) -> None:
         print(f"Função {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)} não definida na classe {self.__class__.__name__}.")
@@ -181,6 +181,8 @@ class Text (Object):
         return f"{setColor(self.Color)}{self.Layer.set_Layer()}"
     def set(self) -> str:
         preScript = ""
+        if self.style.textHeight!=0.00 and self.applyHeight:
+            return preScript+f"TEXT\n{self.style.set_Style()}JUSTIFY\n{self.justify}\n{setCoord(self.p0)}\n{self.rotation}\n{self.content}\n"
         return preScript+f"TEXT\n{self.style.set_Style()}JUSTIFY\n{self.justify}\n{setCoord(self.p0)}\n{self.height}\n{self.rotation}\n{self.content}\n"
     pass
 
@@ -376,6 +378,8 @@ class Script ():
         self.Layers.append(layer)
 
     def add_Style(self,style:StyleText=STYLE_TEXT_STANDARD) -> None:
+        if not isinstance(style,StyleText):
+            raise Exception("O ")
         for i in self.Styles:
             if i is style:
                 print(str(inspect.currentframe().f_code.co_name)+": "+"Já existe esse Style no objeto Script.")
@@ -397,7 +401,7 @@ class Script ():
         for i in self.elementos:
             if "text" in i.ID.lower():
                 if i.style in self.Styles:
-                    continue
+                    pass
                 else:
                     self.add_Style(i.style)
                     
@@ -407,7 +411,7 @@ class Script ():
                 self.add_Layer(i.Layer)
         pass
     
-    def compileScript (self,NOVO:bool=True,FINALIZAR:bool=False,pastaDWG:str="") -> None:
+    def compileScript(self,NOVO:bool=True,SALVAR:bool=False,BLOCKALL:bool=False,CLOSE:bool=False,pastaDWG:str="") -> None:
 
         """      
         Implementar uma função final que compile uma string com as definições abaixo e atribua ao parâmetro Script.comandos.
@@ -447,23 +451,32 @@ class Script ():
             self.script(elemento.load_settings())
             self.script(elemento.set())
         
+        if BLOCKALL:
+            pontoBaseBlock = "0,0"
+            self.script(f"BLOCK\n{remover_acentos(self.nome_arquivo.replace(' ',''))}\n{pontoBaseBlock}\nALL\n\nINSERT\n{remover_acentos(self.nome_arquivo.replace(' ',''))}\n{pontoBaseBlock}\n\n\n\n")
+        
         self.script("AI_SELALL\nZOOM\nOBJECT\n") # Zoom em foco dos objetos.
         
-        if FINALIZAR:
+        if SALVAR:
             # self.script(f"FILEDIA 0\n")
             if pastaDWG=="": # Salvará na pasta out na raiz do classes
-                self.script(f"SAVEAS\nLT2018\n\"{self.filePath}out/log {self.nome_arquivo}.dwg\"\n")
+                caminho = f"{self.filePath}out/log_{self.nome_arquivo}.dwg"
             else:
-                self.script(f"SAVEAS\nLT2018\n\"{self.filePath}log {self.nome_arquivo}.dwg\"\n")
-                
-            self.script("Y\n") # Comando para confirmar a substituição do arquivo (Y de YES)
+                caminho = f"{self.filePath}log_{self.nome_arquivo}.dwg"
+            self.script(f"SAVEAS\nLT2018\n\"{caminho}\"\n")
+            
+            # self.script("Y\n")
+            
+            if os.path.exists(caminho):
+                self.script("Y\n")
             # self.script(f"FILEDIA 1\n")
-            # self.script(f"CLOSE\n")
-        pass
+
+        if CLOSE:
+            self.script(f"CLOSE\n")
 
     def save (self,caminho:str="") -> None:
         self.pathSCR = f"{caminho}{self.nome_arquivo}.scr"
-        self.pathDWG = f"{caminho}{self.nome_arquivo}.dwg"
+        # self.pathDWG = f"{caminho}{self.nome_arquivo}.dwg"
         with open(self.pathSCR, "w", encoding="utf-8") as arquivo:
             arquivo.write(self.comandos)
-            
+            print(f"Arquivo {self.pathSCR} salvo")
