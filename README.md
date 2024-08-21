@@ -31,6 +31,7 @@ Não tem opções que envolvam o eixo Z (para autocad 3D, não irá funcionar - 
 - /in/planilhaEntrada.xlsx     (planilha de entrada preenchida precisa ser posta aqui antes de inicializar o programa)
 - /out/
 
+# Notas das atualizações
 Data/Hora de início do desenvolvimento: 07/06/2024 10h00
 - Versão 0.0.1 - 07/06/2024 - Implementação das classes básicas de funcionamento do programa.
 - Versão 0.0.2 - 20/06/2024 - Definição da arquitetura de software e finalização de algumas implementações.
