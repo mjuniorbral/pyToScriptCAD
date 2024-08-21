@@ -1,11 +1,9 @@
 # pyToScriptCAD
 Um módulo para elaboração de scripts para automação da elaboração de arquivo dwg
 
-Programa escrito por Marcelo Cabral dos Santos Junior
+Programa escrito por Marcelo Cabral dos Santos Junior - Engenheiro Civil
 
-Analista Técnico de Engenharia Civil na GEOCOBA - Projetos de Engenharia (https://www.geocoba.com/)
-
-Contato: msj@geocoba.com (profissional), mjuniorbral@gmail.com (pessoal)
+Contato: mjuniorbral@gmail.com
 
 Versão utilizada do Python: 3.10.11
 
@@ -38,7 +36,7 @@ Data/Hora de início do desenvolvimento: 07/06/2024 10h00
 - Versão 0.0.2 - 20/06/2024 - Definição da arquitetura de software e finalização de algumas implementações.
 - Versão 0.0.3 - 29/07/2024 - Correções de bugs: - traço não estava sendo computado nas colunas de classificação de rochas
 - Versão 0.1.0 - 14/08/2024 - Nova versão do progrma com atualização do modelo de sondagem
-  - Novo modelo requisitado pela CCR,
+  - Alteração do modelo para log sondagem requisitado.
   - Módulo models totalmente reformulado (modelo anteriores de log de sondagem foi totalmente descontinuado nessa versão),
   - correção de bugs,
   - implementação do BLOCKALL no método Script.compileScript (transformar tudo em um bloco com (0,0) como origem),
@@ -50,7 +48,7 @@ Data/Hora de início do desenvolvimento: 07/06/2024 10h00
   - Criação de mais estilos de texto simplex com widthFactor diferentes,
   - Estruturação da classe do modelo foi aprimorada deixando comentários para clarear o código,
   - Aprimorado a geração de log (terminal) para acompanhamento da execução do programa.
-- Versão 0.1.1 - 16/08/2024 - Implementação das cores baseado no novo CTB da CCR
+- Versão 0.1.1 - 16/08/2024 - Implementação das cores baseado no novo CTB
 
 # Como usar o programa?
 1. Garantir que as versões do python, autocad e módulo pandas estão compatíveis com esse projeto (não precisa ser a mesma versão, mas precisa ser compatível - na dúvida, rode o programa, e se não der erro, a princípio é compatível);

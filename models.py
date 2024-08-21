@@ -1,8 +1,3 @@
-# Programa atualizado para atendimento às exigências da CCR para o padrão de modelo de sondagem
-# Início do processo de atualização: 12/08/2024
-# Realizado por Marcelo Cabral dos Santos Junior (msj@geocoba.com)
-
-# Importação de Módulos
 from classes import *
 import pandas as pd
 import numpy as np
@@ -32,16 +27,16 @@ class LogSondagem(Model):
         self.nomeSondagem = self.nome
         
         self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
-        self.TXT_GEOCOBA = Layer("LOGSOND-TXT_GEOCOBA","8")
+        self.TXT = Layer("LOGSOND-TXT","8")
         self.LOGS = Layer("LOGSOND-LOGS","yellow")
         self.NIVEL_DAGUA = Layer("LOGSOND-NIVEL_AGUA","green")
         self.NSPT = Layer("LOGSOND-NSPT","green")
         
-        self.SIMPLEX_GEOCOBA_W50 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W50","Simplex",widthFactor=0.5)
-        self.SIMPLEX_GEOCOBA_W60 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W60","Simplex",widthFactor=0.6)
-        self.SIMPLEX_GEOCOBA_W80 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W80","Simplex",widthFactor=0.8)
+        self.SIMPLEX_W50 = StyleText("LOGSOND-SIMPLEX-W50","Simplex",widthFactor=0.5)
+        self.SIMPLEX_W60 = StyleText("LOGSOND-SIMPLEX-W60","Simplex",widthFactor=0.6)
+        self.SIMPLEX_W80 = StyleText("LOGSOND-SIMPLEX-W80","Simplex",widthFactor=0.8)
         
-        self.SIMPLEX_GEOCOBA = StyleText("LOGSOND-SIMPLEX-GEOCOBA","Simplex",widthFactor=1.0)
+        self.SIMPLEX = StyleText("LOGSOND-SIMPLEX","Simplex",widthFactor=1.0)
 
         dadosSondagens = self.entrada[self.entrada.columns[0:2]]
         config = self.entrada[self.entrada.columns[3:5]]
@@ -129,13 +124,13 @@ class LogSondagem(Model):
         elementos.append(Polyline(((0,0),(-espessuraBarra,hTriang),(espessuraBarra,hTriang)),self.LOGS,True))
         
         # Texto do quadro resumo ======================================================================================
-        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(5./6.)+hTriang),"Sondagem",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
-        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(3./6.)+hTriang),"Cota",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
-        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(1./6.)+hTriang),"Dist. Proj.",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
+        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(5./6.)+hTriang),"Sondagem",self.SIMPLEX,self.TXT,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
+        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(3./6.)+hTriang),"Cota",self.SIMPLEX,self.TXT,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
+        elementos.append(Text((-afastamentoTextoQuadro,dimensoesQuadro[1]*(1./6.)+hTriang),"Dist. Proj.",self.SIMPLEX,self.TXT,justify="MR",height=tamanhoFonte*razaoFonteLegendaQuadro))
         
-        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(5./6.)+hTriang),self.nomeSondagem,self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="ML",height=tamanhoFonte))
-        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(3./6.)+hTriang),toGrandeza(cotaSondagem,"m"),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="ML",height=tamanhoFonte))
-        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(1./6.)+hTriang),toGrandeza(distProj,"m"),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="ML",height=tamanhoFonte))
+        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(5./6.)+hTriang),self.nomeSondagem,self.SIMPLEX,self.TXT,justify="ML",height=tamanhoFonte))
+        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(3./6.)+hTriang),toGrandeza(cotaSondagem,"m"),self.SIMPLEX,self.TXT,justify="ML",height=tamanhoFonte))
+        elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(1./6.)+hTriang),toGrandeza(distProj,"m"),self.SIMPLEX,self.TXT,justify="ML",height=tamanhoFonte))
         
         # Barra (ou palito) hachurada da linha de sondagem ============================================================
         elementos.append(Rectangule((-espessuraBarra/2.,0),(espessuraBarra/2.,-profund),self.LOGS))
@@ -153,18 +148,18 @@ class LogSondagem(Model):
         if len(self.manobrasRocha)==0:
             alturaLegendaRocha=0
         else:
-            elementos.append(Text((-dxLITO/2.-2*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"LITO",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((-1.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"ALT",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((-0.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"FRAT",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((+1.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"RQD(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((+0.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"REC(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((-dxLITO/2.-2*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"LITO",self.SIMPLEX,self.TXT,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((-1.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"ALT",self.SIMPLEX,self.TXT,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((-0.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"FRAT",self.SIMPLEX,self.TXT,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((+1.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"RQD(%)",self.SIMPLEX_W60,self.TXT,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((+0.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"REC(%)",self.SIMPLEX_W60,self.TXT,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
             
         # Inserindo o final da sondagem ================================================================================
-        elementos.append(Text((-afastamentoTextoQuadro,-profund-alturaLegendaRocha-espacamentoFinalSond),f"Final da sondagem: {toGrandeza(profund,'m')}",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,justify="TR",height=tamanhoFonte))
+        elementos.append(Text((-afastamentoTextoQuadro,-profund-alturaLegendaRocha-espacamentoFinalSond),f"Final da sondagem: {toGrandeza(profund,'m')}",self.SIMPLEX_W60,self.TXT,justify="TR",height=tamanhoFonte))
         
         # Adicionando a posição do Nível da Água =======================================================================
         if str(profNA).upper() == "SECO" or isinstance(profNA,str):
-            elementos.append(Text((+afastamentoTextoQuadro,-profund-alturaLegendaRocha),f"NA: {profNA}",self.SIMPLEX_GEOCOBA,self.NIVEL_DAGUA,justify="TL",height=tamanhoFonte))
+            elementos.append(Text((+afastamentoTextoQuadro,-profund-alturaLegendaRocha),f"NA: {profNA}",self.SIMPLEX,self.NIVEL_DAGUA,justify="TL",height=tamanhoFonte))
             pass
         else:
             elementos.append(Line((-espessuraBarra/2.,-profNA),(+espessuraBarra/2.+2*dxRQDeREC+dxNA+afastamentoNA,-profNA),self.NIVEL_DAGUA))
@@ -173,7 +168,7 @@ class LogSondagem(Model):
             elementos.append(Line((+espessuraBarra/2.+2*dxRQDeREC+dxNA*2/7+afastamentoNA,-profNA-dxNA*2/10),(+espessuraBarra/2.+2*dxRQDeREC+dxNA*5/7+afastamentoNA,-profNA-dxNA*2/10),self.NIVEL_DAGUA))
             elementos.append(Line((+espessuraBarra/2.+2*dxRQDeREC+dxNA*3/7+afastamentoNA,-profNA-dxNA*3/10),(+espessuraBarra/2.+2*dxRQDeREC+dxNA*4/7+afastamentoNA,-profNA-dxNA*3/10),self.NIVEL_DAGUA))
             
-            elementos.append(Text((+espessuraBarra/2.+2*dxRQDeREC+dxNA/2.+afastamentoNA,-profNA),f"NA: {toGrandeza(profNA,'m')}",self.SIMPLEX_GEOCOBA_W80,self.NIVEL_DAGUA,height=tamanhoFonte,justify="BC"))
+            elementos.append(Text((+espessuraBarra/2.+2*dxRQDeREC+dxNA/2.+afastamentoNA,-profNA),f"NA: {toGrandeza(profNA,'m')}",self.SIMPLEX_W80,self.NIVEL_DAGUA,height=tamanhoFonte,justify="BC"))
         
         # Adicionar nSPT
         for n,manobra in self.manobrasSolo.iterrows():
@@ -187,9 +182,9 @@ class LogSondagem(Model):
                 nSPT = manobra["nSPT"]
 
             if abs(inicio-fim)<=0.5:
-                elementos.append(Text((-espessuraBarra,-inicio),nSPT,self.SIMPLEX_GEOCOBA,self.NSPT,height=tamanhoFonte*razaoFonteNSPT,justify="TR"))
+                elementos.append(Text((-espessuraBarra,-inicio),nSPT,self.SIMPLEX,self.NSPT,height=tamanhoFonte*razaoFonteNSPT,justify="TR"))
             else:
-                elementos.append(Text((-espessuraBarra,-inicio-(fim-inicio)/2.),nSPT,self.SIMPLEX_GEOCOBA,self.NSPT,height=tamanhoFonte*razaoFonteNSPT,justify="MR"))
+                elementos.append(Text((-espessuraBarra,-inicio-(fim-inicio)/2.),nSPT,self.SIMPLEX,self.NSPT,height=tamanhoFonte*razaoFonteNSPT,justify="MR"))
         
         # Adicionando camadas de solo
         for n,camada in self.camadas.iterrows():
@@ -197,7 +192,7 @@ class LogSondagem(Model):
             fim = camada["Fim"]
             classificacao = camada["Classificação"]
             elementos.append(Rectangule((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),self.LOGS))
-            elementos.append(MText((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),str.upper(str(classificacao)),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,textHeight=acharHeightIdeal(classificacao,dxLITO,abs(inicio-fim))))
+            elementos.append(MText((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),str.upper(str(classificacao)),self.SIMPLEX,self.TXT,textHeight=acharHeightIdeal(classificacao,dxLITO,abs(inicio-fim))))
             
             elementos.append(Line((-espessuraBarra/2.-2*dxALTeFRAT,-inicio),(-espessuraBarra/2.,-inicio),self.LINHA_FINA,Linetype="DASHED",Lineweight="0.05"))
             
@@ -219,10 +214,10 @@ class LogSondagem(Model):
                 pass
 
             # Texto Alteração, Fraturamento, Recuperação e RQD
-            elementos.append(Text((-0.5*espessuraBarra-1.5*dxALTeFRAT,-0.5*abs(inicio+fim)),alt,self.SIMPLEX_GEOCOBA_W50,self.TXT_GEOCOBA,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
-            elementos.append(Text((-0.5*espessuraBarra-0.5*dxALTeFRAT,-0.5*abs(inicio+fim)),frat,self.SIMPLEX_GEOCOBA_W50,self.TXT_GEOCOBA,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
-            elementos.append(Text((+0.5*espessuraBarra+0.5*dxRQDeREC,-0.5*abs(inicio+fim)),toGrandeza(rqd,"",0),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
-            elementos.append(Text((+0.5*espessuraBarra+1.5*dxRQDeREC,-0.5*abs(inicio+fim)),toGrandeza(rec,"",0),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
+            elementos.append(Text((-0.5*espessuraBarra-1.5*dxALTeFRAT,-0.5*abs(inicio+fim)),alt,self.SIMPLEX_W50,self.TXT,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
+            elementos.append(Text((-0.5*espessuraBarra-0.5*dxALTeFRAT,-0.5*abs(inicio+fim)),frat,self.SIMPLEX_W50,self.TXT,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
+            elementos.append(Text((+0.5*espessuraBarra+0.5*dxRQDeREC,-0.5*abs(inicio+fim)),toGrandeza(rqd,"",0),self.SIMPLEX,self.TXT,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
+            elementos.append(Text((+0.5*espessuraBarra+1.5*dxRQDeREC,-0.5*abs(inicio+fim)),toGrandeza(rec,"",0),self.SIMPLEX,self.TXT,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
             
             # Retângulo da Alteração
             elementos.append(Rectangule(
@@ -253,7 +248,7 @@ class LogSondagem(Model):
         for n,criterio in self.criteriosParada.iterrows():
             textoCriterio = criterio["Critérios de Paralisação"]
             profCriterio = criterio["Prof. (m)"]
-            elementos.append(Text((+espessuraBarra,-profCriterio),str.upper(str(textoCriterio)),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteNSPT*tamanhoFonte,justify="BL"))
+            elementos.append(Text((+espessuraBarra,-profCriterio),str.upper(str(textoCriterio)),self.SIMPLEX,self.TXT,height=razaoFonteNSPT*tamanhoFonte,justify="BL"))
             
         # Adicionando os elementos ao Script do Modelo =================================================================
         for elemento in elementos:
