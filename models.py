@@ -1,8 +1,3 @@
-# Programa atualizado para atendimento às exigências da CCR para o padrão de modelo de sondagem
-# Início do processo de atualização: 12/08/2024
-# Realizado por Marcelo Cabral dos Santos Junior (msj@geocoba.com)
-
-# Importação de Módulos
 from classes import *
 import pandas as pd
 import numpy as np
