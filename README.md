@@ -1,20 +1,30 @@
 # pyToScriptCAD
+
 Um módulo para elaboração de scripts para automação da elaboração de arquivo dwg
 
 ## Descrição do Autor
+
 Programa escrito por Marcelo Cabral dos Santos Junior
+
 Analista Técnico de Engenharia Civil na GEOCOBA - Projetos de Engenharia (https://www.geocoba.com/)
+
 Contato: mjuniorbral@gmail.com (pessoal)
 
 ## Descrição das dependências
+
 Versão utilizada do Python: 3.10.11
+
 Módulos utilizados nativos do Python (não precisa de instalação):
+
 - unicodedata
 - os
 - inspect
 - time
+
 Módulos externos utilizados (instalados através do pip install obtido no Microsoft Store junto com o Python 3.10.11):
+
 - pandas (1.5.3): utilizado pra abrir e importar a planilha de entradas da sondagem // Instale usando o comando ´pip install pandas´
+
 Versão utilizada do Autocad: S.51.0.0 Autodesk AutoCAD LT 2022 (Product Version visto no Menu Help > About)
 
 *Não tem opções que envolvam o eixo Z (para autocad 3D, não irá funcionar - a menos que tenha uma alteração dos script com adição das coordenadas Z=0)*
