@@ -151,8 +151,8 @@ class LogSondagem(Model):
             elementos.append(Text((-dxLITO/2.-2*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"LITO",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
             elementos.append(Text((-1.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"ALT",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
             elementos.append(Text((-0.5*dxALTeFRAT-espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"FRAT",self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((+1.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"RQD(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
-            elementos.append(Text((+0.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"REC(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((+0.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"RQD(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
+            elementos.append(Text((+1.5*dxRQDeREC+espessuraBarra/2.,-profund-alturaLegendaRocha/2.),"REC(%)",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,height=razaoFonteLegendaRocha*tamanhoFonte,justify="MC"))
             
         # Inserindo o final da sondagem ================================================================================
         elementos.append(Text((-afastamentoTextoQuadro,-profund-alturaLegendaRocha-espacamentoFinalSond),f"Final da sondagem: {toGrandeza(profund,'m')}",self.SIMPLEX_GEOCOBA_W60,self.TXT_GEOCOBA,justify="TR",height=tamanhoFonte))
