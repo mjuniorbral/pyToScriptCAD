@@ -8,7 +8,6 @@ class Model():
     def __init__(self,nome:str,caminhoRelativo:str,ltscale:float) -> None:
         self.nome = nome
         self.caminhoRelativo = caminhoRelativo
-        self.script = Script(nome,ltscale=ltscale)
         self.entrada = pd.read_excel(self.caminhoRelativo,self.nome)
         pass
 
@@ -26,6 +25,7 @@ class LogSondagem(Model):
 
         super().__init__(nomeSondagem,caminhoRelativo,ltscale)
         self.nomeSondagem = self.nome
+        self.script = Script(f"log_{self.nome}",ltscale=ltscale)
         
         self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
         self.TXT_GEOCOBA = Layer("LOGSOND-TXT_GEOCOBA","8")
@@ -260,7 +260,8 @@ class Locacao(Model):
     def __init__(self, nomeArquivo: str, caminhoRelativo: str) -> None:
         ltscale=0.01
         super().__init__(nomeArquivo, caminhoRelativo, ltscale)
-
+        self.script = Script(self.nome,ltscale=ltscale)
+        
         self.nomeArquivo = self.nome
         
         self.SIMPLEX_GEOCOBA = StyleText("LOGSOND-SIMPLEX-GEOCOBA","Simplex",widthFactor=1.0)

@@ -463,9 +463,9 @@ class Script ():
         if SALVAR:
             # self.script(f"FILEDIA 0\n")
             if pastaDWG=="": # Salvará na pasta out na raiz do classes
-                caminho = f"{self.filePath}out/log_{self.nome_arquivo}.dwg"
+                caminho = f"{self.filePath}out/{self.nome_arquivo}.dwg"
             else:
-                caminho = f"{self.filePath}log_{self.nome_arquivo}.dwg"
+                caminho = f"{self.filePath}{self.nome_arquivo}.dwg"
             self.script(f"SAVEAS\nLT2018\n\"{caminho}\"\n")
             
             # self.script("Y\n")
