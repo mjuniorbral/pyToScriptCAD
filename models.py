@@ -11,11 +11,11 @@ class Model():
         self.entrada = pd.read_excel(self.caminhoRelativo,self.nome)
         pass
 
-    def finalizarLog(self,caminho="",SALVAR=True,BLOCKALL=True,CLOSE=False,NOVO=True) -> None:
+    def finalizar(self,caminho="",SALVAR=True,BLOCKALL=True,CLOSE=False,NOVO=True) -> None:
         self.script.refresh()
         self.script.compileScript(SALVAR=SALVAR,BLOCKALL=BLOCKALL,CLOSE=CLOSE,NOVO=NOVO)
         self.script.save(caminho)
-        print(f"_____________Finalizando log {self.nome}\n")
+        print(f"_____________Finalizando  {self.nome}\n")
 
 class LogSondagem(Model):
     
