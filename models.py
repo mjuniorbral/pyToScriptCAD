@@ -281,7 +281,11 @@ class Locacao(Model):
         self.config = dict(
             raio_circulo = 1.00,
             fontsize_nome = 1.00,
-            fontsize_anotacao = 0.50
+            fontsize_anotacao = 0.50,
+            dx_nome	= 0.00,
+            dy_nome	= 0.00,
+            dx_anotacao	= 0.00,
+            dy_anotacao	= 0.00,
             )
         self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 8"])
         # print(self.config)
@@ -307,7 +311,9 @@ class Locacao(Model):
             
             ponto:dict = self.pontos.loc[pt].to_dict()
             # print(ponto)
-            p0 = (ponto["coord_x"],ponto["coord_y"])
+            p0_ponto = (ponto["coord_x"],ponto["coord_y"])
+            p0_nome = (ponto["coord_x"],ponto["coord_y"])
+            p0_anotacao = (ponto["coord_x"],ponto["coord_y"])
             nome_ponto = pt
             z = ponto["coord_z"]
             layer = LAYER_0 if str(ponto["layer"])=="nan" else self.layers[ponto["layer"]]
@@ -316,12 +322,22 @@ class Locacao(Model):
             fontsize_anotacao = self.config["fontsize_anotacao"]
             
             # Criar circulo na coordenada
-            elementos.append(Circle(p0,r,layer))
+            elementos.append(Circle(p0_ponto,r,layer))
             # Criar texto com nome
-            elementos.append(Text(p0,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
+            elementos.append(Text(p0_nome,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
             # Criar texto com anotação e cota se tiver
+            texto = []
+            
+            if str(z)!="nan":
+                texto.append(f"Elevação {z}m")
+            
             if str(anotacao)!="nan":
-                elementos.append(Text(p0,anotacao,self.SIMPLEX_GEOCOBA,layer,justify="TL",height=fontsize_anotacao))
+                texto.append(f"{anotacao}")
+                
+            if len(texto)>0:
+                texto = " - ".join(texto)
+                elementos.append(Text(p0_anotacao,texto,self.SIMPLEX_GEOCOBA,layer,justify="TL",height=fontsize_anotacao))
+                
 
         # Adicionando os elementos ao Script do Modelo =================================================================
         for elemento in elementos:
