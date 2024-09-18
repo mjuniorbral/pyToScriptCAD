@@ -17,6 +17,9 @@ class Layer ():
         self.Lineweight = Lineweight
         pass
     
+    def __repr__(self) -> str:
+        return f"{self.__class__}: {self.nameLayer=},{self.Color=},{self.Linetype=},{self.Lineweight=}"
+    
     def create_Layer (self)->str:
         return f"-LAYER\nNew\n{self.nameLayer}\nColor\n{self.Color}\n{self.nameLayer}\nLtype\n{self.Linetype}\n{self.nameLayer}\nLweight\n{self.Lineweight}\n"\
             f"{self.nameLayer}\n\n"
