@@ -302,7 +302,7 @@ class Locacao(Model):
         elementos = []
         r = self.config["raio_circulo"]
         for pt in self.pontos.index:
-            print(f"[{datetime.datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}]: Criando elementos do {self.pontos['nome_ponto'][i]} ({i+1}º ponto)")
+            print(f"[{datetime.datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}]: Criando elementos do {pt}")
             
             ponto:dict = self.pontos.loc[pt].to_dict()
             # print(ponto)
