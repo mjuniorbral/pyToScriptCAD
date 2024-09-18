@@ -1,3 +1,4 @@
+import datetime
 from classes import *
 import pandas as pd
 import numpy as np
@@ -250,6 +251,77 @@ class LogSondagem(Model):
             profCriterio = criterio["Prof. (m)"]
             elementos.append(Text((+espessuraBarra,-profCriterio),str.upper(str(textoCriterio)),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteNSPT*tamanhoFonte,justify="BL"))
             
+        # Adicionando os elementos ao Script do Modelo =================================================================
+        for elemento in elementos:
+            self.script.addElements(elemento)
+    pass
+
+class Locacao(Model):
+    def __init__(self, nomeArquivo: str, caminhoRelativo: str) -> None:
+        ltscale=0.01
+        super().__init__(nomeArquivo, caminhoRelativo, ltscale)
+
+        self.nomeArquivo = self.nome
+        
+        self.SIMPLEX_GEOCOBA = StyleText("LOGSOND-SIMPLEX-GEOCOBA","Simplex",widthFactor=1.0)
+        
+        pontos = self.entrada[self.entrada.columns[0:6]]
+        config = self.entrada[self.entrada.columns[7:9]]
+        layers = self.entrada[self.entrada.columns[10:14]]
+        self.pontos_df = pontos[pontos.notna().any(axis=1)]
+        self.config_df = config[config.notna().any(axis=1)]
+        self.layers_df = layers[layers.notna().any(axis=1)]
+        
+        self.nPontos = len(self.pontos_df["nome_ponto"])
+
+        # Isolamento dos dados ========================================================================================
+        
+        self.config_df = self.config_df.set_index("Configurações")
+        self.config = dict(
+            raio_circulo = 1.00,
+            fontsize_nome = 1.00,
+            fontsize_anotacao = 0.50
+            )
+        self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 8"])
+        # print(self.config)
+
+        # self.pontos = self.pontos_df.to_dict()
+        self.pontos:pd.DataFrame = self.pontos_df.set_index("nome_ponto")
+        
+        self.layers = {}
+        for i in range(len(self.layers_df["nameLayer"])):
+            # self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
+            layer_i:dict = self.layers_df.iloc[i].to_dict()
+            layer_i_filtered = {}
+            for key,value in layer_i.items():
+                if not(str(value) == str(np.nan)):
+                    layer_i_filtered[key] = value                    
+            self.layers[layer_i["nameLayer"]] = Layer(**layer_i_filtered)
+
+    def criarElementos(self) -> None:
+        elementos = []
+        r = self.config["raio_circulo"]
+        for pt in self.pontos.index:
+            print(f"[{datetime.datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}]: Criando elementos do {self.pontos['nome_ponto'][i]} ({i+1}º ponto)")
+            
+            ponto:dict = self.pontos.loc[pt].to_dict()
+            # print(ponto)
+            p0 = (ponto["coord_x"],ponto["coord_y"])
+            nome_ponto = pt
+            z = ponto["coord_z"]
+            layer = LAYER_0 if str(ponto["layer"])=="nan" else self.layers[ponto["layer"]]
+            anotacao = ponto["anotacao"]
+            fontsize_nome = self.config["fontsize_nome"]
+            fontsize_anotacao = self.config["fontsize_anotacao"]
+            
+            # Criar circulo na coordenada
+            elementos.append(Circle(p0,r,layer))
+            # Criar texto com nome
+            elementos.append(Text(p0,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
+            # Criar texto com anotação e cota se tiver
+            if str(anotacao)!="nan":
+                elementos.append(Text(p0,anotacao,self.SIMPLEX_GEOCOBA,layer,justify="TL",height=fontsize_anotacao))
+
         # Adicionando os elementos ao Script do Modelo =================================================================
         for elemento in elementos:
             self.script.addElements(elemento)
