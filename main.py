@@ -10,6 +10,10 @@ print("\n"*20)
 from models import *
 import os
 
+# Mode 0: LogSondagem
+# Mode 1: Locação de Pontos
+mode = 1
+
 if __name__=="__main__":
     
     pastaEntradas = 'in\\'
@@ -25,9 +29,14 @@ if __name__=="__main__":
     for caminhoPlanilhaEntrada in get_all_files_in_directory(pastaEntradas):
         for planilha in listarPlanilhas(caminhoPlanilhaEntrada):
             print(f"_____________Iniciando processamento do \"{caminhoPlanilhaEntrada}\", planilha \"{planilha}\"")
-            logSaida = LogSondagem(planilha,caminhoPlanilhaEntrada)
-            logSaida.criarElementos()
-            logSaida.finalizarLog(pastaSaidas,CLOSE=True)
+            if mode==0: # LogSondagem
+                modelSaida = LogSondagem(planilha,caminhoPlanilhaEntrada)
+            elif mode==1: # Locação de Pontos
+                modelSaida = Locacao(planilha,caminhoPlanilhaEntrada)
+            modelSaida.criarElementos()
+            modelSaida.finalizar(pastaSaidas,CLOSE=True)
+        
+
     pass
 end_time = time.time()
 
