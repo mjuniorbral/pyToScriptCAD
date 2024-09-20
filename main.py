@@ -12,7 +12,10 @@ import os
 
 # Mode 0: LogSondagem
 # Mode 1: Locação de Pontos
-mode = 1
+mode = -1
+
+if not (mode in [0,1]):
+    mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n"))
 
 if __name__=="__main__":
     
