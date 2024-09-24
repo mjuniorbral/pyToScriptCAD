@@ -2,3 +2,5 @@
 *.pyc
 /__pycache__
 in/pyToScriptCAD - Planilha de Locacao - 3A -17-09-2024.xlsx
+*.scr
+*.dwg
