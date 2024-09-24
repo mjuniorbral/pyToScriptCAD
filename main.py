@@ -2,10 +2,6 @@
 
 import time
 
-start_time = time.time()
-print("\n"*5)
-print("===== Programa iniciado...")
-print("\n"*20)
 
 from models import *
 import os
@@ -16,6 +12,11 @@ mode = -1
 
 if not (mode in [0,1]):
     mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n"))
+
+start_time = time.time()
+print("\n"*5)
+print("===== Programa iniciado...")
+print("\n"*20)
 
 if __name__=="__main__":
     
