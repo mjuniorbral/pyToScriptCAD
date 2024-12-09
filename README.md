@@ -60,6 +60,7 @@ Data/Hora de início do desenvolvimento: 07/06/2024 10h00
   - Aprimorado a geração de log (terminal) para acompanhamento da execução do programa.
 - Versão 0.1.1 - 16/08/2024 - Implementação das cores baseado no novo CTB da CCR
 - Versão 0.1.2 - 28/08/2024 - Correção do posicionamento dos valores de Recuperação e RQD (alteração no arquivo models.py no método LogSondagem.criarElementos)
+- Versão 0.1.3 - 09/12/2024 - Pequenas atualizações.
 
 ## Como usar o programa?
 1. Garantir que as versões do python, autocad e módulo pandas estão compatíveis com esse projeto (não precisa ser a mesma versão, mas precisa ser compatível - na dúvida, rode o programa, e se não der erro, a princípio é compatível);
