@@ -61,7 +61,7 @@ Data/Hora de início do desenvolvimento: 07/06/2024 10h00
 - Versão 0.1.1 - 16/08/2024 - Implementação das cores baseado no novo CTB da CCR
 - Versão 0.1.2 - 28/08/2024 - Correção do posicionamento dos valores de Recuperação e RQD (alteração no arquivo models.py no método LogSondagem.criarElementos)
 - Versão 0.1.3 - 09/12/2024 - Pequenas atualizações.
-- Versão 0.1.4 - 13/12/2024 - Correção do nome dos logs, retiradas das células com o caracter "\xa0" e self.script movido para class pai Model.
+- Versão 0.1.4 - 13/12/2024 - Correção do nome dos log, self.script movido para class pai Model e separação de responsabilidade de tratamento de pandas.Dataframe com a criação de uma função autônoma para retiradas de linhas apenas com células com valor NaN e com o caracter "\xa0".
 
 ## Como usar o programa?
 1. Garantir que as versões do python, autocad e módulo pandas estão compatíveis com esse projeto (não precisa ser a mesma versão, mas precisa ser compatível - na dúvida, rode o programa, e se não der erro, a princípio é compatível);
