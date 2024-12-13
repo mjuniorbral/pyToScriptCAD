@@ -9,7 +9,7 @@ class Model():
         self.nome = nome
         self.caminhoRelativo = caminhoRelativo
         self.entrada = pd.read_excel(self.caminhoRelativo,self.nome)
-        self.script = Script(f"log_{self.nome}",ltscale=ltscale)
+        self.script = Script(self.nome,ltscale=ltscale)
         pass
 
     def finalizar(self,caminho="",SALVAR=True,BLOCKALL=True,CLOSE=False,NOVO=True) -> None:
@@ -25,6 +25,7 @@ class LogSondagem(Model):
         ltscale=0.01
 
         super().__init__(nomeSondagem,caminhoRelativo,ltscale)
+        self.script.nome_arquivo = f"log_{self.nome}"
         self.nomeSondagem = self.nome
         
         self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
@@ -117,7 +118,7 @@ class LogSondagem(Model):
         # Verificando a equivalência entre o nome da planilha e da sondagem no campo da célula referente ==============
         if self.nomeSondagem!=nomeSondagem:
             self.nomeSondagem = nomeSondagem
-            self.script.nome_arquivo= nomeSondagem
+            self.script.nome_arquivo = "log_"+nomeSondagem
             print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O nome da planilha é diferente do nome na célula referente a sondagem. Nome do modelo foi substituido para {nomeSondagem}")
 
         # Inserindo os elementos ======================================================================================
@@ -265,7 +266,6 @@ class Locacao(Model):
     def __init__(self, nomeArquivo: str, caminhoRelativo: str) -> None:
         ltscale=0.01
         super().__init__(nomeArquivo, caminhoRelativo, ltscale)
-        self.script = Script(self.nome,ltscale=ltscale)
         
         self.nomeArquivo = self.nome
         
