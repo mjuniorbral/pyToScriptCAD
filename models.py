@@ -9,6 +9,7 @@ class Model():
         self.nome = nome
         self.caminhoRelativo = caminhoRelativo
         self.entrada = pd.read_excel(self.caminhoRelativo,self.nome)
+        self.script = Script(f"log_{self.nome}",ltscale=ltscale)
         pass
 
     def finalizar(self,caminho="",SALVAR=True,BLOCKALL=True,CLOSE=False,NOVO=True) -> None:
@@ -25,7 +26,6 @@ class LogSondagem(Model):
 
         super().__init__(nomeSondagem,caminhoRelativo,ltscale)
         self.nomeSondagem = self.nome
-        self.script = Script(f"log_{self.nome}",ltscale=ltscale)
         
         self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
         self.TXT_GEOCOBA = Layer("LOGSOND-TXT_GEOCOBA","8")
