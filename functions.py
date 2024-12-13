@@ -119,6 +119,17 @@ def get_all_files_in_directory(directory:str)->list:
     return file_paths
 
 def retornarDFValido(df:pd.DataFrame):
+    """Função responsável por retirar todas as linhas de um dataframe que se encaixem no seguinte critério:
+        - Todos os elementos são NaN ou \"\\xa0\".
+    Retorna o dataframe sem essas linhas.
+    Não funciona para planilhas em que os dados são registrados em colunas e os parâmetros em linhas.
+
+    Args:
+        df (pd.DataFrame): Tabela com entrada em linhas e parâmetros nas colunas.
+
+    Returns:
+        df (pd.DataFrame): Tabela sem as linhas vazias ou com os caracteres \"\\xa0\" em todas as células.
+    """
     df = df.copy(deep=True)
     
     filter_xa0 = (df=="\xa0")
