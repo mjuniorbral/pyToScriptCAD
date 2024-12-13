@@ -48,10 +48,15 @@ class LogSondagem(Model):
        
         self.dadosSondagens = dadosSondagens[dadosSondagens.notna().any(axis=1)]
         self.config = config[config.notna().any(axis=1)]
-        self.camadas = camadas[camadas.notna().any(axis=1)]
-        self.manobrasSolo = manobrasSolo[manobrasSolo.notna().any(axis=1)]
-        self.manobrasRocha = manobrasRocha[manobrasRocha.notna().any(axis=1)]
-        self.criteriosParada = criteriosParada[criteriosParada.notna().any(axis=1)]
+        
+        camadas = camadas[camadas.notna().any(axis=1)]
+        manobrasSolo = manobrasSolo[manobrasSolo.notna().any(axis=1)]
+        manobrasRocha = manobrasRocha[manobrasRocha.notna().any(axis=1)]
+        criteriosParada = criteriosParada[criteriosParada.notna().any(axis=1)]
+        self.camadas = camadas[camadas["Classificação"]!="\xa0"]
+        self.manobrasSolo = manobrasSolo[manobrasSolo["nSPT"]!="\xa0"]
+        self.manobrasRocha = manobrasRocha[manobrasRocha["% Rec."]!="\xa0"]
+        self.criteriosParada = criteriosParada[criteriosParada["Critérios de Paralisação"]!="\xa0"]
 
     def criarElementos(self)->None:
         
