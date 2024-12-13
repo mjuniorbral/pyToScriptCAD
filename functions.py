@@ -117,3 +117,20 @@ def get_all_files_in_directory(directory:str)->list:
             file_paths.append(os.path.join(root, file))
     
     return file_paths
+
+def retornarDFValido(df:pd.DataFrame):
+    df = df.copy(deep=True)
+    
+    filter_xa0 = (df=="\xa0")
+    
+    filter_nan = df.notna()
+    filter_nan = ~filter_nan.astype(bool)
+    
+    filter_composto = filter_xa0 | filter_nan
+    filter_composto = filter_composto.all(axis=1)
+    
+    filter_composto = ~filter_composto.astype(bool)
+    
+    df = df[filter_composto]
+    print(df)
+    return df

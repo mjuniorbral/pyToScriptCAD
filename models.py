@@ -2,7 +2,7 @@ import datetime
 from classes import *
 import pandas as pd
 import numpy as np
-from functions import toGrandeza
+from functions import toGrandeza,retornarDFValido
 
 class Model():
     def __init__(self,nome:str,caminhoRelativo:str,ltscale:float) -> None:
@@ -50,15 +50,22 @@ class LogSondagem(Model):
         self.dadosSondagens = dadosSondagens[dadosSondagens.notna().any(axis=1)]
         self.config = config[config.notna().any(axis=1)]
         
-        camadas = camadas[camadas.notna().any(axis=1)]
-        manobrasSolo = manobrasSolo[manobrasSolo.notna().any(axis=1)]
-        manobrasRocha = manobrasRocha[manobrasRocha.notna().any(axis=1)]
-        criteriosParada = criteriosParada[criteriosParada.notna().any(axis=1)]
-        self.camadas = camadas[camadas["Classificação"]!="\xa0"]
-        self.manobrasSolo = manobrasSolo[manobrasSolo["nSPT"]!="\xa0"]
-        self.manobrasRocha = manobrasRocha[manobrasRocha["% Rec."]!="\xa0"]
-        self.criteriosParada = criteriosParada[criteriosParada["Critérios de Paralisação"]!="\xa0"]
-
+        # retornarDFValido(manobrasSolo)
+        
+        # camadas = camadas[camadas.notna().any(axis=1)]
+        # manobrasSolo = manobrasSolo[manobrasSolo.notna().any(axis=1)]
+        # manobrasRocha = manobrasRocha[manobrasRocha.notna().any(axis=1)]
+        # criteriosParada = criteriosParada[criteriosParada.notna().any(axis=1)]
+        # self.camadas = camadas[camadas["Classificação"]!="\xa0"]
+        # self.manobrasSolo = manobrasSolo[manobrasSolo["nSPT"]!="\xa0"]
+        # self.manobrasRocha = manobrasRocha[manobrasRocha["% Rec."]!="\xa0"]
+        # self.criteriosParada = criteriosParada[criteriosParada["Critérios de Paralisação"]!="\xa0"]
+        
+        self.camadas = retornarDFValido(camadas)
+        self.manobrasSolo = retornarDFValido(manobrasSolo)
+        self.manobrasRocha = retornarDFValido(manobrasRocha)
+        self.criteriosParada = retornarDFValido(criteriosParada)
+        
     def criarElementos(self)->None:
         
         # Isolamento dos dados ========================================================================================
