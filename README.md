@@ -24,6 +24,7 @@ Módulos utilizados nativos do Python (não precisa de instalação):
 Módulos externos utilizados (instalados através do pip install obtido no Microsoft Store junto com o Python 3.10.11):
 
 - pandas (1.5.3): utilizado pra abrir e importar a planilha de entradas da sondagem // Instale usando o comando ´pip install pandas´
+- openpyxl (3.1.5): utilizado para possibilitar a interação com arquivos .xls e .xlsx // Instale usando o comando ´pip install openpyxl´
 
 Versão utilizada do Autocad: S.51.0.0 Autodesk AutoCAD LT 2022 (Product Version visto no Menu Help > About)
 
