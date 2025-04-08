@@ -13,7 +13,7 @@ if __name__=="__main__":
     mode = -1
 
     if not (mode in [0,1]):
-        mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos"))
+        mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: para Log de CPTu"))
 
     start_time = time.time()
     print("\n"*5)
@@ -37,6 +37,8 @@ if __name__=="__main__":
                 modelSaida = LogSondagem(planilha,caminhoPlanilhaEntrada)
             elif mode==1: # Locação de Pontos
                 modelSaida = Locacao(planilha,caminhoPlanilhaEntrada)
+            elif mode==2: # Log de CPTu
+                modelSaida = LogCPTu(planilha,caminhoPlanilhaEntrada)
             modelSaida.criarElementos()
             modelSaida.finalizar(pastaSaidas,CLOSE=True)
         

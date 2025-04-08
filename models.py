@@ -2,7 +2,7 @@ import datetime
 from classes import *
 import pandas as pd
 import numpy as np
-from functions import toGrandeza,retornarDFValido
+from functions import toGrandeza,retornarDFValido,if_else_function
 
 class Model():
     def __init__(self,nome:str,caminhoRelativo:str,ltscale:float) -> None:
@@ -264,6 +264,105 @@ class LogSondagem(Model):
             profCriterio = criterio["Prof. (m)"]
             elementos.append(Text((+espessuraBarra,-profCriterio),str.upper(str(textoCriterio)),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,height=razaoFonteNSPT*tamanhoFonte,justify="BL"))
             
+        # Adicionando os elementos ao Script do Modelo =================================================================
+        for elemento in elementos:
+            self.script.addElements(elemento)
+    pass
+
+class LogCPTu(Model):
+    
+    def __init__(self,nomeCPTu:str,caminhoRelativo:str) -> None:
+
+        ltscale=0.01
+
+        super().__init__(nomeCPTu,caminhoRelativo,ltscale)
+        self.script.nome_arquivo = f"log_{self.nome}"
+        self.nomeCPTu = self.nome
+        
+        self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
+        self.TXT_GEOCOBA = Layer("LOGSOND-TXT_GEOCOBA","8")
+        self.LOGS = Layer("LOGSOND-LOGS","yellow")
+        self.NIVEL_DAGUA = Layer("LOGSOND-NIVEL_AGUA","green")
+        self.NSPT = Layer("LOGSOND-NSPT","green")
+        
+        self.SIMPLEX_GEOCOBA_W50 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W50","Simplex",widthFactor=0.5)
+        self.SIMPLEX_GEOCOBA_W60 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W60","Simplex",widthFactor=0.6)
+        self.SIMPLEX_GEOCOBA_W80 = StyleText("LOGSOND-SIMPLEX-GEOCOBA-W80","Simplex",widthFactor=0.8)
+        
+        self.SIMPLEX_GEOCOBA = StyleText("LOGSOND-SIMPLEX-GEOCOBA","Simplex",widthFactor=1.0)
+
+        dadosEnsaio = self.entrada[self.entrada.columns[0:2]]
+        config = self.entrada[self.entrada.columns[3:5]]
+        graficos = self.entrada[self.entrada.columns[6:12]]
+       
+        self.dadosSondagens = dadosEnsaio[dadosEnsaio.notna().any(axis=1)]
+        self.config = config[config.notna().any(axis=1)]
+        self.graficos = retornarDFValido(graficos)
+
+
+    def criarElementos(self)->None:
+        
+        # Isolamento dos dados ========================================================================================
+        dadosSond = self.dadosSondagens.set_index("Dados do Ensaio")
+        elementos = []
+        
+        # "Projeto"
+        # "Modelo de Log"
+        # "Nome do Ensaio"
+        # "Coord. N (m)"
+        # "Coord. E (m)"
+        # "Cota de topo (m)"
+        # "Prof. total (m)"
+        # "Distância de Projeção (m)"
+        # "Data e/ou hora do ensaio"
+        # "Empresa responsável"
+
+        nomeCPTu = dadosSond.at["Nome do Ensaio","Unnamed: 1"]
+        cotaCPTu = dadosSond.at["Cota de topo (m)","Unnamed: 1"]
+        profund = dadosSond.at["Prof. total (m)","Unnamed: 1"]
+        distProj = dadosSond.at["Distância de Projeção (m)","Unnamed: 1"]
+
+        print("Extraindo parâmetros da planilha.")
+
+        DFT_PARAMS = dict(
+            dimensoesQuadroAltura = 3.50,
+            dimensoesQuadroLargura = 8.00,
+            espessuraBarra = 0.20,
+            hTriang = 0.70,
+            afastamentoTextoQuadro = 0.30,
+            tamanhoFonte = 0.40
+            )
+        try:
+            
+            dadosConfig = self.config.set_index("Configurações")
+            
+            dimensoesQuadroAltura = dadosConfig.at["dimensoesQuadroAltura","Unnamed: 4"]
+            dimensoesQuadroLargura = dadosConfig.at["dimensoesQuadroLargura","Unnamed: 4"]
+            espessuraBarra = dadosConfig.at["espessuraBarra","Unnamed: 4"]
+            hTriang = dadosConfig.at["hTriang","Unnamed: 4"]
+            afastamentoTextoQuadro = dadosConfig.at["afastamentoTextoQuadro","Unnamed: 4"]
+            tamanhoFonte = dadosConfig.at["tamanhoFonte","Unnamed: 4"]
+            dimensoesQuadro:tuple[float] = ( dimensoesQuadroLargura, dimensoesQuadroAltura )
+            print("Parâmetros extraídos da planilha com sucesso.")
+        except Exception as m:
+            print(f"\n! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: Os parâmetros NÃO foram extraídos da forma correta. Erro: [ {m} ]. Os parâmetros padrões serão usados.\n")
+            # Parâmetros padrões
+            dimensoesQuadroAltura = DFT_PARAMS["dimensoesQuadroAltura"]
+            dimensoesQuadroLargura = DFT_PARAMS["dimensoesQuadroLargura"]
+            espessuraBarra = DFT_PARAMS["espessuraBarra"]
+            hTriang = DFT_PARAMS["hTriang"]
+            afastamentoTextoQuadro = DFT_PARAMS["afastamentoTextoQuadro"]
+            tamanhoFonte = DFT_PARAMS["tamanhoFonte"]
+            dimensoesQuadro:tuple[float] = ( dimensoesQuadroLargura, dimensoesQuadroAltura )
+        
+        # Verificando a equivalência entre o nome da planilha e da sondagem no campo da célula referente ==============
+        if self.nomeCPTu!=nomeCPTu:
+            self.nomeCPTu = nomeCPTu
+            self.script.nome_arquivo = "log_"+nomeCPTu
+            print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O nome da planilha é diferente do nome na célula referente a sondagem. Nome do modelo foi substituido para {nomeCPTu}")
+
+        # Inserindo os elementos ======================================================================================
+        
         # Adicionando os elementos ao Script do Modelo =================================================================
         for elemento in elementos:
             self.script.addElements(elemento)
