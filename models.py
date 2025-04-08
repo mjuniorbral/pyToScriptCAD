@@ -2,7 +2,7 @@ import datetime
 from classes import *
 import pandas as pd
 import numpy as np
-from functions import toGrandeza,retornarDFValido,if_else_function
+from functions import toGrandeza,retornarDFValido,if_else_function, if_error_function
 
 class Model():
     def __init__(self,nome:str,caminhoRelativo:str,ltscale:float) -> None:
