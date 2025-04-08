@@ -6,19 +6,19 @@ import time
 from models import *
 import os
 
-# Mode 0: LogSondagem
-# Mode 1: Locação de Pontos
-mode = -1
-
-if not (mode in [0,1]):
-    mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n"))
-
-start_time = time.time()
-print("\n"*5)
-print("===== Programa iniciado...")
-print("\n"*20)
 
 if __name__=="__main__":
+    # Mode 0: LogSondagem
+    # Mode 1: Locação de Pontos
+    mode = -1
+
+    if not (mode in [0,1]):
+        mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos"))
+
+    start_time = time.time()
+    print("\n"*5)
+    print("===== Programa iniciado...")
+    print("\n"*20)
     
     pastaEntradas = 'in\\'
     pastaSaidas = 'out\\'
