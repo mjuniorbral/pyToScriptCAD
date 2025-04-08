@@ -324,6 +324,7 @@ class LogCPTu(Model):
 
         print("Extraindo parâmetros da planilha.")
 
+        # Aqui entrará o uso do if_else_function e if_error_function
         DFT_PARAMS = dict(
             dimensoesQuadroAltura = 3.50,
             dimensoesQuadroLargura = 8.00,
@@ -362,6 +363,9 @@ class LogCPTu(Model):
             print(f"! ! ! ! AVISOS - {str(inspect.currentframe().f_code.co_name)}: O nome da planilha é diferente do nome na célula referente a sondagem. Nome do modelo foi substituido para {nomeCPTu}")
 
         # Inserindo os elementos ======================================================================================
+        
+        ### Aqui entrará os elementos a serem adicionados no CAD (olhar a classe LogSondagem)
+        ### Será preciso apenas adicionar as instâncias dos objetos na lista elementos.
         
         # Adicionando os elementos ao Script do Modelo =================================================================
         for elemento in elementos:
