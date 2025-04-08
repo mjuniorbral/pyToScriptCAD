@@ -145,3 +145,14 @@ def retornarDFValido(df:pd.DataFrame):
     df = df[filter_composto]
     print(df)
     return df
+
+def if_else_function(condition,value,defaut):
+    if condition:
+        return value
+    return defaut
+
+def if_error_function(command:str,default):
+    try:
+        return eval(command)
+    except:
+        return default
