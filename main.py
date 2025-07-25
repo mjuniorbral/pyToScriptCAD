@@ -10,9 +10,9 @@ import os
 if __name__=="__main__":
     # Mode 0: LogSondagem
     # Mode 1: Locação de Pontos
-    mode = -1
+    mode = 3
 
-    if not (mode in [0,1]):
+    if not (mode in [0,1,2,3]):
         mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: para Log de CPTu\n3: Projeção de Verticais"))
 
     start_time = time.time()
