@@ -485,14 +485,14 @@ class ProjSecao(Model):
         
         self.config_df = self.config_df.set_index("Configurações")
         self.config = dict(
-            # Aguardando a inserção das configurações default para colocar aqui
+            espessura_vertical	= 0.30,
+            altura_ponto = 0.30
             )
-        self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 8"])
+        self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 1"])
         # print(self.config)
-        # raise Exception("Verificar linha")
 
         # self.pontos = self.pontos_df.to_dict()
-        self.vertical:pd.DataFrame = self.verticais_df.set_index("NOME_VERTICAL")
+        self.verticais:pd.DataFrame = self.verticais_df.set_index("NOME_VERTICAL")
         self.secoes:pd.DataFrame = self.secoes_df.set_index("SECOES")
         
         self.layers = {}
