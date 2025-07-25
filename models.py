@@ -458,3 +458,6 @@ class Locacao(Model):
         for elemento in elementos:
             self.script.addElements(elemento)
     pass
+
+class ProjSecao(Model):
+    pass
