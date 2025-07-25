@@ -505,4 +505,47 @@ class ProjSecao(Model):
                     layer_i_filtered[key] = value
             self.layers[layer_i["nameLayer"]] = Layer(**layer_i_filtered)
 
+    def criarElementos(self) -> None:
+        elementos = []
+        for vert in self.verticais.index:
+            print(f"[{datetime.datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}]: Criando elementos do {vert}")
+            
+            vertical:dict = self.verticais.loc[vert].to_dict()
+            print(vertical)
+            p0_ponto = (vertical["COORD_X"],vertical["COORD_Y"])
+            nome_ponto = vert
+            z_topo = vertical["COTA_TOPO"]
+            z_base = vertical["COTA_BASE"]
+            secao = vertical["SECAO_PROJECAO"]
+            layer = LAYER_0 if str(vertical["LAYER"])=="nan" else self.layers[vertical["LAYER"]]
+            
+            #############################################################
+            ### ADICIONAR A CRIAÇÃO DOS ELEMENTOS PROJETADOS NA SEÇÃO ###
+            ### PUXAR DADOS DA SEÇÃO E USAR A PROJETORA PARA OBTER AS ###
+            ### COORDENADAS A SEREM FEITAS NO DESENHO PARA COLOCAR O  ###
+            ############ TEXTO E AS LINHAS NA POSIÇÃO LATERAL ###########
+            
+            ### SEGUIR A PROJETORA USADA NO PROJETO 438_PD NA PASTA TEMP DO PC DA GEOCOBA
+            
+            # # Criar circulo na coordenada
+            # elementos.append(Circle(p0_ponto,r,layer))
+            # # Criar texto com nome
+            # elementos.append(Text(p0_nome,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
+            # # Criar texto com anotação e cota se tiver
+            # texto = []
+            
+            # if str(z)!="nan":
+            #     texto.append(f"Elevação {z}m")
+            
+            # if str(anotacao)!="nan":
+            #     texto.append(f"{anotacao}")
+                
+            # if len(texto)>0:
+            #     texto = " - ".join(texto)
+            #     elementos.append(Text(p0_anotacao,texto,self.SIMPLEX_GEOCOBA,layer,justify="TL",height=fontsize_anotacao))
+                
+
+        # Adicionando os elementos ao Script do Modelo =================================================================
+        for elemento in elementos:
+            self.script.addElements(elemento)
     pass
