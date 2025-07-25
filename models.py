@@ -460,4 +460,49 @@ class Locacao(Model):
     pass
 
 class ProjSecao(Model):
+    def __init__(self, nomeArquivo: str, caminhoRelativo: str) -> None:
+        ltscale=0.01
+        super().__init__(nomeArquivo, caminhoRelativo, ltscale)
+        
+        self.nomeArquivo = self.nome
+        
+        self.SIMPLEX_GEOCOBA = StyleText("PERFIL-SIMPLEX-GEOCOBA","Simplex",widthFactor=1.0)
+        
+        config = self.entrada[self.entrada.columns[0:2]]
+        secoes = self.entrada[self.entrada.columns[3:8]]
+        verticais = self.entrada[self.entrada.columns[9:16]]
+        layers = self.entrada[self.entrada.columns[17:21]]
+        
+        self.config_df = config[config.notna().any(axis=1)]
+        self.secoes_df = secoes[secoes.notna().any(axis=1)]
+        self.verticais_df = verticais[verticais.notna().any(axis=1)]
+        self.layers_df = layers[layers.notna().any(axis=1)]
+        
+        self.nVerticaisPontos = len(self.verticais_df["NOME_VERTICAL"])
+        self.nSecoes =  len(self.secoes_df["SECOES"])
+
+        # Isolamento dos dados ========================================================================================
+        
+        self.config_df = self.config_df.set_index("Configurações")
+        self.config = dict(
+            # Aguardando a inserção das configurações default para colocar aqui
+            )
+        self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 8"])
+        # print(self.config)
+        # raise Exception("Verificar linha")
+
+        # self.pontos = self.pontos_df.to_dict()
+        self.vertical:pd.DataFrame = self.verticais_df.set_index("NOME_VERTICAL")
+        self.secoes:pd.DataFrame = self.secoes_df.set_index("SECOES")
+        
+        self.layers = {}
+        for i in range(len(self.layers_df["nameLayer"])):
+            # self.LINHA_FINA = Layer("LOGSOND-LINHA_FINA","red")
+            layer_i:dict = self.layers_df.iloc[i].to_dict()
+            layer_i_filtered = {}
+            for key,value in layer_i.items():
+                if not(str(value) == str(np.nan)):
+                    layer_i_filtered[key] = value
+            self.layers[layer_i["nameLayer"]] = Layer(**layer_i_filtered)
+
     pass
