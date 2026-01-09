@@ -6,3 +6,5 @@ in/pyToScriptCAD - Planilha de Locacao - 3A -17-09-2024.xlsx
 *.dwg
 /temp
 *.xlsx
+*.dwl
+*.dwl2
