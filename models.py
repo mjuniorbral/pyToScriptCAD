@@ -438,6 +438,14 @@ class Locacao(Model):
             p0_anotacao = (ponto["coord_x"],ponto["coord_y"])
             nome_ponto = pt
             z = ponto["coord_z"]
+            # print("\n\n\n")
+            # print(z)
+            # print(ponto["layer"])
+            if str(ponto["layer"])=="nan":
+                layer = LAYER_0
+            else:
+                # print(self.layers)
+                self.layers[ponto["layer"]]
             layer = LAYER_0 if str(ponto["layer"])=="nan" else self.layers[ponto["layer"]]
             anotacao = ponto["anotacao"]
             fontsize_nome = self.config["fontsize_nome"]
