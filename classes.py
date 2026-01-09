@@ -161,8 +161,8 @@ class Text (Object):
         nAcentosCedilhas = len(encontrar_acentos_e_cedilha(content))
         if nAcentosCedilhas>0:
             self.content = remover_acentos(content)
-            self.comments.append(f"! ! ! ! AVISOS - {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)}: Seu objeto {self.__class__.__name__} foi alterado devido a limitação de formatação e todos os acentos e cedilhas foram retirados (número de remoções totais: {nAcentosCedilhas}). Para informação, o texto original antes da alteração está entre chaves: \n;[{content}].")
-            print(self.comments[-1])
+            # self.comments.append(f"! ! ! ! AVISOS - {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)}: Seu objeto {self.__class__.__name__} foi alterado devido a limitação de formatação e todos os acentos e cedilhas foram retirados (número de remoções totais: {nAcentosCedilhas}). Para informação, o texto original antes da alteração está entre chaves: \n;[{content}].")
+            # print(self.comments[-1])
             self.aplicarSinalEncoding = True
         else:
             self.content = content
@@ -213,8 +213,8 @@ class MText (Object):
         nAcentosCedilhas = len(encontrar_acentos_e_cedilha(content))
         if nAcentosCedilhas>0:
             self.content = remover_acentos(content)
-            self.comments.append(f"! ! ! ! AVISOS - {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)}: Seu objeto {self.__class__.__name__} foi alterado devido a limitação de formatação e todos os acentos e cedilhas foram retirados (número de remoções totais: {nAcentosCedilhas}). Para informação, o texto original antes da alteração está entre chaves (em que \P significa uma quebra de linha): \n;[{content}]")
-            print(self.comments[-1])
+            # self.comments.append(f"! ! ! ! AVISOS - {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)}: Seu objeto {self.__class__.__name__} foi alterado devido a limitação de formatação e todos os acentos e cedilhas foram retirados (número de remoções totais: {nAcentosCedilhas}). Para informação, o texto original antes da alteração está entre chaves (em que \P significa uma quebra de linha): \n;[{content}]")
+            # print(self.comments[-1])
             self.aplicarSinalEncoding = True
         else:
             self.content = content
