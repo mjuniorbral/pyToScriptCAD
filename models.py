@@ -430,8 +430,11 @@ class Locacao(Model):
         r = self.config["raio_circulo"]
         for pt in self.pontos.index:
             print(f"[{datetime.datetime.now().strftime('%d/%m/%Y-%H:%M:%S')}]: Criando elementos do {pt}")
-            
-            ponto:dict = self.pontos.loc[pt].to_dict()
+            if type(self.pontos.loc[pt]) == pd.DataFrame:
+                print("\n\n\n",self.pontos.loc[pt])
+                raise Exception("Nome do ponto não é único! Cada ponto deve ter um nome diferente.")
+            else:
+                ponto:dict = self.pontos.loc[pt].to_dict()
             # print(ponto)
             p0_ponto = (ponto["coord_x"],ponto["coord_y"])
             p0_nome = (ponto["coord_x"],ponto["coord_y"])
