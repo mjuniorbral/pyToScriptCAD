@@ -15,7 +15,7 @@ if __name__=="__main__":
     # Mode 0: LogSondagem
     # Mode 1: Locação de Pontos
     # Mode 2: Projeção de Verticais
-    mode = 2
+    mode = -1
 
     if not (mode in [0,1,2]):
         mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: Projeção de Verticais (em desenvolvimento)\n"))
