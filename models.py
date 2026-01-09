@@ -422,7 +422,7 @@ class Locacao(Model):
             layer_i_filtered = {}
             for key,value in layer_i.items():
                 if not(str(value) == str(np.nan)):
-                    layer_i_filtered[key] = value                    
+                    layer_i_filtered[key] = str(value)
             self.layers[layer_i["nameLayer"]] = Layer(**layer_i_filtered)
 
     def criarElementos(self) -> None:
