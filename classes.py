@@ -342,6 +342,41 @@ class Hatch (Object):
     pass
 
 ################################### NÃO IMPLEMENTADO #################################
+class Block (Object):
+    def __init__(self,
+                 p0:tuple,
+                 block_path:str,
+                 scale_factor:float = 1.,
+                 rotation_angle:int = 0,
+                 layer:Layer=LAYER_0,
+                 Color="BYLAYER",
+                 Linetype="BYLAYER",
+                 Lineweight="BYLAYER",
+                 block_attributes:tuple[str]=tuple()) -> None:
+        super().__init__(layer,f"Object.{self.__class__.__name__}.ID=[{p0},{block_path}]")
+        self.p0 = p0
+        self.block_path = block_path
+        self.scale_factor = scale_factor
+        self.rotation_angle = rotation_angle
+        self.Color = Color
+        self.Linetype = Linetype
+        self.Lineweight = Lineweight
+        self.block_attributes = ""
+        if len(block_attributes):
+            self.has_attributes = True
+            for attribute_i in block_attributes:
+                self.block_attributes += f"{attribute_i}\n"
+        else:
+            self.has_attributes = False
+        pass
+
+    def load_settings(self) -> str:
+        return f"{setColor(self.Color)}{setLineType(self.Linetype)}{setLineWeight(self.Lineweight)}{self.Layer.set_Layer()}"
+    def set(self) -> str:
+        return f"-INSERT\n\"{self.block_path}\"\n{setCoord(self.p0)}\n{self.scale_factor}\n{self.rotation_angle}\n{self.block_attributes}\n"
+    pass
+
+################################### NÃO IMPLEMENTADO #################################
 class Dimension (Object):
     # Copiar de algum outro Object e mudar variáveis e comandos
     pass

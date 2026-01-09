@@ -408,6 +408,8 @@ class Locacao(Model):
             dy_nome	= 0.00,
             dx_anotacao	= 0.00,
             dy_anotacao	= 0.00,
+            use_block = False,
+            block_path = ""
             )
         self.config.update(self.config_df.dropna(axis=0).to_dict()["Unnamed: 8"])
         # print(self.config)
@@ -453,12 +455,14 @@ class Locacao(Model):
             anotacao = ponto["anotacao"]
             fontsize_nome = self.config["fontsize_nome"]
             fontsize_anotacao = self.config["fontsize_anotacao"]
-            
-            # Criar circulo na coordenada
-            elementos.append(Circle(p0_ponto,r,layer))
-            # Criar texto com nome
-            elementos.append(Text(p0_nome,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
-            # Criar texto com anotação e cota se tiver
+            if self.config["use_block"]:
+                elementos.append(Block(p0_ponto,self.config["block_path"],block_attributes=(nome_ponto,)))
+            else:
+                # Criar circulo na coordenada
+                elementos.append(Circle(p0_ponto,r,layer))
+                # Criar texto com nome
+                elementos.append(Text(p0_nome,nome_ponto,self.SIMPLEX_GEOCOBA,layer,height=fontsize_nome))
+                # Criar texto com anotação e cota se tiver
             texto = []
             
             if str(z)!="nan":
