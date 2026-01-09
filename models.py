@@ -194,6 +194,13 @@ class LogSondagem(Model):
                 nSPT = str(int(manobra["nSPT"]))
             elif isinstance(manobra["nSPT"],str):
                 nSPT = manobra["nSPT"]
+            else:
+                print(type(manobra["nSPT"]))
+                try:
+                    nSPT = manobra["nSPT"]
+                except Exception as m:
+                    print("!!!!!!!!!!!!!!!!!!!!!!!!\nErro ocorrido foi descoberto no computador da Lydia.")
+                    raise Exception(f"Erro {m}")
 
             if abs(inicio-fim)<=0.5:
                 elementos.append(Text((-espessuraBarra,-inicio),nSPT,self.SIMPLEX_GEOCOBA,self.NSPT,height=tamanhoFonte*razaoFonteNSPT,justify="TR"))
