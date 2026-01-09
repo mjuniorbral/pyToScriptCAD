@@ -8,3 +8,5 @@
 *.dwl2
 *.dxf
 *.bak
+/in
+/out
