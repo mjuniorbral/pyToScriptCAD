@@ -82,13 +82,13 @@ class Object ():
         self.ID = ID
         self.Layer = layer
         self.comments = []
-        pass
-    def set(self) -> None:
+        return
+    def set(self) -> str:
         print(f"Função {self.__class__.__name__}.{inspect.currentframe().f_code.co_name} não definida na classe {self.__class__.__name__}.")
-        pass
-    def load_settings(self) -> None:
+        return ""
+    def load_settings(self) -> str:
         print(f"Função {self.__class__.__name__}.{str(inspect.currentframe().f_code.co_name)} não definida na classe {self.__class__.__name__}.")
-        pass
+        return ""
     def set_comments(self) -> str:
         if len(self.comments)==0:
             return ""
