@@ -6,14 +6,20 @@ import time
 from models import *
 import os
 
+_NOVO = True
+_BLOCKALL = True
+_CLOSE = False
 
 if __name__=="__main__":
+    # Mode -1: Perguntar modo
     # Mode 0: LogSondagem
     # Mode 1: Locação de Pontos
-    mode = 1
+    # Mode 2: Log de CPTu
+    # Mode 3: Projeção de Verticais
+    mode = 0
 
     if not (mode in [0,1,2,3]):
-        mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: para Log de CPTu\n3: Projeção de Verticais"))
+        mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: para Log de CPTu (não desenvolvido)\n3: Projeção de Verticais (em desenvolvimento)\n"))
 
     start_time = time.time()
     print("\n"*5)
@@ -36,13 +42,15 @@ if __name__=="__main__":
             if mode==0: # LogSondagem
                 modelSaida = LogSondagem(planilha,caminhoPlanilhaEntrada)
             elif mode==1: # Locação de Pontos
+                # _NOVO = False
+                # _BLOCKALL = False
                 modelSaida = Locacao(planilha,caminhoPlanilhaEntrada)
             elif mode==2: # Log de CPTu
                 modelSaida = LogCPTu(planilha,caminhoPlanilhaEntrada)
             elif mode==3:
                 modelSaida = ProjSecao(planilha,caminhoPlanilhaEntrada)
             modelSaida.criarElementos()
-            modelSaida.finalizar(pastaSaidas,CLOSE=True)
+            modelSaida.finalizar(pastaSaidas,CLOSE=_CLOSE,NOVO=_NOVO,BLOCKALL=_BLOCKALL)
         
 
     pass
