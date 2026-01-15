@@ -156,3 +156,6 @@ def if_error_function(command:str,default):
         return eval(command)
     except:
         return default
+
+def nearest_value(value,_list):
+    return sorted(map(lambda x: (abs(value-x),x),list(_list)))[0][1]
