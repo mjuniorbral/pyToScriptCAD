@@ -131,7 +131,7 @@ class LogSondagem(Model):
         # Inserindo os elementos ======================================================================================
         
         # Quadro resumo ===============================================================================================
-        elementos.append(Rectangule((-dimensoesQuadro[0]/2.,dimensoesQuadro[1]+hTriang),(dimensoesQuadro[0]/2.,hTriang),self.LOGS))
+        elementos.append(Rectangle((-dimensoesQuadro[0]/2.,dimensoesQuadro[1]+hTriang),(dimensoesQuadro[0]/2.,hTriang),self.LOGS))
         elementos.append(Line((-dimensoesQuadro[0]/2.,dimensoesQuadro[1]*(1./3.)+hTriang),(dimensoesQuadro[0]/2.,dimensoesQuadro[1]*(1./3.)+hTriang),self.LOGS))
         elementos.append(Line((-dimensoesQuadro[0]/2.,dimensoesQuadro[1]*(2./3.)+hTriang),(dimensoesQuadro[0]/2.,dimensoesQuadro[1]*(2./3.)+hTriang),self.LOGS))
         elementos.append(Line((0,dimensoesQuadro[1]+hTriang),(0,hTriang),self.LOGS))
@@ -147,7 +147,7 @@ class LogSondagem(Model):
         elementos.append(Text((+afastamentoTextoQuadro,dimensoesQuadro[1]*(1./6.)+hTriang),toGrandeza(distProj,"m"),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="ML",height=tamanhoFonte))
         
         # Barra (ou palito) hachurada da linha de sondagem ============================================================
-        elementos.append(Rectangule((-espessuraBarra/2.,0),(espessuraBarra/2.,-profund),self.LOGS))
+        elementos.append(Rectangle((-espessuraBarra/2.,0),(espessuraBarra/2.,-profund),self.LOGS))
         y = -1
         while y>-profund:
             elementos.append(Line((-espessuraBarra/2.,y),(espessuraBarra/2.,y),self.LOGS))
@@ -212,7 +212,7 @@ class LogSondagem(Model):
             inicio = camada["Início"]
             fim = camada["Fim"]
             classificacao = camada["Classificação"]
-            elementos.append(Rectangule((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),self.LOGS))
+            elementos.append(Rectangle((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),self.LOGS))
             elementos.append(MText((-espessuraBarra/2.-2*dxALTeFRAT-dxLITO,-inicio),(-espessuraBarra/2.-2*dxALTeFRAT,-fim),str.upper(str(classificacao)),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,textHeight=acharHeightIdeal(classificacao,dxLITO,abs(inicio-fim))))
             
             elementos.append(Line((-espessuraBarra/2.-2*dxALTeFRAT,-inicio),(-espessuraBarra/2.,-inicio),self.LINHA_FINA,Linetype="DASHED",Lineweight="0.05"))
@@ -241,25 +241,25 @@ class LogSondagem(Model):
             elementos.append(Text((+0.5*espessuraBarra+1.5*dxRQDeREC,-0.5*abs(inicio+fim)),toGrandeza(rec,"",0),self.SIMPLEX_GEOCOBA,self.TXT_GEOCOBA,justify="MC",height=tamanhoFonte*razaoFonteTxtRocha))
             
             # Retângulo da Alteração
-            elementos.append(Rectangule(
+            elementos.append(Rectangle(
                 (-0.5*espessuraBarra-2*dxALTeFRAT,-inicio),
                 (-0.5*espessuraBarra-1*dxALTeFRAT,-fim),
                 self.LOGS
                 ))
             # Retângulo do Fraturamento
-            elementos.append(Rectangule(
+            elementos.append(Rectangle(
                 (-0.5*espessuraBarra-1*dxALTeFRAT,-inicio),
                 (-0.5*espessuraBarra-0*dxALTeFRAT,-fim),
                 self.LOGS
                 ))
             # Retângulo da Recuperação
-            elementos.append(Rectangule(
+            elementos.append(Rectangle(
                 (+0.5*espessuraBarra+1*dxRQDeREC,-inicio),
                 (+0.5*espessuraBarra+0*dxRQDeREC,-fim),
                 self.LOGS
                 ))
             # Retângulo do RQD
-            elementos.append(Rectangule(
+            elementos.append(Rectangle(
                 (+0.5*espessuraBarra+2*dxRQDeREC,-inicio),
                 (+0.5*espessuraBarra+1*dxRQDeREC,-fim),
                 self.LOGS

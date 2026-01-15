@@ -276,7 +276,7 @@ class Polyline (Object):
     pass
 
 ###################################### Rectangule ####################################
-class Rectangule (Object):
+class Rectangle (Object):
     def __init__(self,
                  p0:tuple,
                  pi:tuple,
