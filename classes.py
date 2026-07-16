@@ -373,7 +373,7 @@ class Block (Object):
     def load_settings(self) -> str:
         return f"{setColor(self.Color)}{setLineType(self.Linetype)}{setLineWeight(self.Lineweight)}{self.Layer.set_Layer()}"
     def set(self) -> str:
-        return f"-INSERT\n\"{self.block_path}\"\n{setCoord(self.p0)}\n{self.scale_factor}\n{self.rotation_angle}\n{self.block_attributes}\n"
+        return f"-INSERT\n\"{self.block_path}\"\n{setCoord(self.p0)}\n{self.scale_factor}\n{self.rotation_angle}\n{self.block_attributes}"
     pass
 
 ################################### NÃO IMPLEMENTADO #################################

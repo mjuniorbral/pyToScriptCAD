@@ -15,7 +15,7 @@ if __name__=="__main__":
     # Mode 0: LogSondagem
     # Mode 1: Locação de Pontos
     # Mode 2: Projeção de Verticais
-    mode = 0
+    mode = -1
 
     if not (mode in [0,1,2]):
         mode = int(input("Digite:\n0: para Log de Sondagem\n1: Locação de Pontos\n2: Projeção de Verticais (em desenvolvimento)\n"))
@@ -41,14 +41,14 @@ if __name__=="__main__":
             if mode==0: # LogSondagem
                 modelSaida = LogSondagem(planilha,caminhoPlanilhaEntrada)
             elif mode==1: # Locação de Pontos
-                # _NOVO = False
-                # _BLOCKALL = False
+                _NOVO = False
+                _BLOCKALL = False
                 modelSaida = Locacao(planilha,caminhoPlanilhaEntrada)
             elif mode==2:
                 modelSaida = ProjSecao(planilha,caminhoPlanilhaEntrada)
             modelSaida.criarElementos()
             modelSaida.finalizar(pastaSaidas,CLOSE=_CLOSE,NOVO=_NOVO,BLOCKALL=_BLOCKALL)
-            model_to_doc_dxf(modelSaida)
+            # model_to_doc_dxf(modelSaida)
 
     pass
 end_time = time.time()
