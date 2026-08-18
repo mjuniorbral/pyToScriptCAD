@@ -14,6 +14,8 @@ class Model():
 
     def finalizar(self,caminho="",SALVAR=True,BLOCKALL=True,CLOSE=False,NOVO=True) -> None:
         self.script.refresh()
+        print()
+        print(self.script.Layers)
         self.script.compileScript(SALVAR=SALVAR,BLOCKALL=BLOCKALL,CLOSE=CLOSE,NOVO=NOVO)
         self.script.save(caminho)
         print(f"_____________Finalizando  {self.nome}\n")
@@ -324,6 +326,7 @@ class Locacao(Model):
                 if not(str(value) == str(np.nan)):
                     layer_i_filtered[key] = str(value)
             self.layers[layer_i["nameLayer"]] = Layer(**layer_i_filtered)
+        print(self.layers)
 
     def criarElementos(self) -> None:
         elementos = []
@@ -341,20 +344,13 @@ class Locacao(Model):
             p0_anotacao = (ponto["coord_x"],ponto["coord_y"])
             nome_ponto = pt
             z = ponto["coord_z"]
-            # print("\n\n\n")
-            # print(z)
-            # print(ponto["layer"])
-            if str(ponto["layer"])=="nan":
-                layer = LAYER_0
-            else:
-                # print(self.layers)
-                self.layers[ponto["layer"]]
+            
             layer = LAYER_0 if str(ponto["layer"])=="nan" else self.layers[ponto["layer"]]
             anotacao = ponto["anotacao"]
             fontsize_nome = self.config["fontsize_nome"]
             fontsize_anotacao = self.config["fontsize_anotacao"]
             if self.config["use_block"]:
-                elementos.append(Block(p0_ponto,self.config["block_path"],block_attributes=(nome_ponto,)))
+                elementos.append(Block(p0_ponto,self.config["block_path"],block_attributes=(nome_ponto,),layer=layer))
             else:
                 # Criar circulo na coordenada
                 elementos.append(Circle(p0_ponto,r,layer))
